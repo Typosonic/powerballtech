@@ -157,7 +157,7 @@ const Index = () => {
       <main className="flex-grow">
         <div className="min-h-screen bg-gray-100">
           {/* Hero Section */}
-          <section className="bg-gradient-to-r from-primary-700 to-primary-900 text-white py-12">
+          <section className="bg-gradient-to-r from-[#9c0d19] to-[#4d060c] text-white py-12">
             <div className="container mx-auto px-4">
               <div className="text-center max-w-3xl mx-auto">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">Powerball on Solana</h1>
@@ -204,17 +204,17 @@ const Index = () => {
                 <h2 className="text-2xl font-bold mb-4 text-gray-900">How It Works</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="p-4">
-                    <div className="text-3xl font-bold text-blue-500 mb-2">1</div>
+                    <div className="text-3xl font-bold text-[#dc1224] mb-2">1</div>
                     <h3 className="font-bold mb-2">Hold $BALL Tokens</h3>
                     <p className="text-gray-600 text-sm">Every 10,000 $BALL tokens you hold = 1 raffle entry</p>
                   </div>
                   <div className="p-4">
-                    <div className="text-3xl font-bold text-blue-500 mb-2">2</div>
+                    <div className="text-3xl font-bold text-[#dc1224] mb-2">2</div>
                     <h3 className="font-bold mb-2">More Entries = Better Odds</h3>
                     <p className="text-gray-600 text-sm">50,000 tokens = 5 entries, 100,000 tokens = 10 entries</p>
                   </div>
                   <div className="p-4">
-                    <div className="text-3xl font-bold text-blue-500 mb-2">3</div>
+                    <div className="text-3xl font-bold text-[#dc1224] mb-2">3</div>
                     <h3 className="font-bold mb-2">Hourly Draws</h3>
                     <p className="text-gray-600 text-sm">VRF selects a random ticket every hour, winner gets paid automatically</p>
                   </div>
@@ -254,7 +254,7 @@ const Index = () => {
                         </div>
                       </div>
                       <div>
-                        <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-6 px-4 rounded-lg shadow-lg">
+                        <div className="bg-gradient-to-r from-[#9c0d19] to-[#4d060c] text-white py-6 px-4 rounded-lg shadow-lg">
                           <div className="flex justify-center items-center gap-2 mb-2">
                             <DollarSign className="w-6 h-6" />
                             <h2 className="text-xl font-semibold">Hourly PowerBall</h2>
